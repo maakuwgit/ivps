@@ -1,0 +1,161 @@
+USE [database_name_here]
+GO
+
+/****** Object:  Table [dbo].[WMALinks]    Script Date: 3/1/2018 7:51:14 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[WMALinks](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[url] [nvarchar](max) NULL,
+	[location] [nvarchar](max) NULL,
+	[name] [varchar](50) NULL,
+	[action] [varchar](50) NULL,
+	[label] [varchar](255) NULL,
+	[properties] [varchar](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetUrlRedirect]    Script Date: 3/1/2018 7:52:09 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetUrlRedirect] 
+@input nvarchar(256)
+AS
+SELECT ur.location
+FROM dbo.WMALinks ur 
+WHERE ur.url = @input Or ur.url + '/' = @input And ur.action = 'Redirect'
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetUrlRewrite]    Script Date: 3/1/2018 7:52:33 AM ******/
+SET ANSI_NULLS ON
+GO
+/****** PROCEDURE for rewrite rule in the Web.config file ******/
+CREATE PROCEDURE [dbo].[GetUrlRewrite] 
+@input nvarchar(256)
+AS
+SELECT TOP 1 location
+FROM dbo.WMALinks
+WHERE PATINDEX(REPLACE(url, '*', '%'), @input) > 0
+AND action ='Rewrite'
+ORDER BY LEN(REPLACE(REPLACE(url, '*/', ''), '/*', '')) DESC
+GO
+
+
+
+/***************************************************************************
+	404 Error Log Table and Redirect Data
+***************************************************************************/
+CREATE TABLE dbo.WMASiteErrorLog (
+	Id int NOT NULL IDENTITY(1,1),
+	raw_url varchar(max) NULL,
+	redirect_url varchar(max) NULL,
+	response_status_code int NULL,
+	http_x_original_url varchar(max) NULL,
+	query_string varchar(max) NULL,
+	remote_addr varchar(50) NULL,
+	remote_host varchar(50) NULL,
+	request_method varchar(50) NULL,
+	http_referer varchar(max) NULL,
+	http_user_agent varchar(max) NULL,
+	path_info varchar(max) NULL,
+	url varchar(max) NULL,
+	script_name varchar(max) NULL,
+	requests int NULL DEFAULT ((0)),
+	LastUpdate datetime NULL DEFAULT (getdate()),
+	Timestamp datetime NULL DEFAULT (getdate())
+);
+
+/***************************************************************************
+	302 Redirect Stored Procedure
+	Only redirect if there is a url
+***************************************************************************/
+SET ANSI_NULLS ON
+GO
+SET ANSI_NULLS ON
+GO
+/****** PROCEDURE for rewrite rule in the Web.config file ******/
+CREATE PROCEDURE [dbo].[Redirect302] 
+@input nvarchar(max)
+AS
+
+SELECT TOP 1 LTRIM(RTRIM(redirect_url)) As ru
+FROM dbo.WMASiteErrorLog
+WHERE (raw_url = @input OR CONCAT(raw_url,'/') = @input) 
+AND response_status_code = 302 AND LEN(LTRIM(RTRIM(redirect_url))) > 0
+GO
+
+
+/***************************************************************************
+	301 Redirect Stored Procedure
+	Only redirect if there is a url
+***************************************************************************/
+SET ANSI_NULLS ON
+GO
+SET ANSI_NULLS ON
+GO
+/****** PROCEDURE for rewrite rule in the Web.config file ******/
+CREATE PROCEDURE [dbo].[Redirect301] 
+@input nvarchar(max)
+AS
+
+SELECT TOP 1 LTRIM(RTRIM(redirect_url)) As ru
+FROM dbo.WMASiteErrorLog
+WHERE (raw_url = @input OR CONCAT(raw_url,'/') = @input) 
+AND response_status_code = 301 AND LEN(LTRIM(RTRIM(redirect_url))) > 0
+GO
+
+
+/***************************************************************************
+	Url ReWrite Stored Procedure - Updated 11/18
+***************************************************************************/
+SET ANSI_NULLS ON
+GO
+SET ANSI_NULLS ON
+GO
+/****** PROCEDURE for rewrite rule in the Web.config file ******/
+CREATE PROCEDURE [dbo].[GetUrlRewrite] 
+@input nvarchar(max)
+AS
+
+SELECT TOP 1 location
+FROM dbo.WMALinks
+WHERE PATINDEX(REPLACE(ISNULL(NULLIF(CompleteUrl,''), Url), '*', '%'), @input) > 0
+AND action ='Rewrite'
+ORDER BY LEN(REPLACE(REPLACE(ISNULL(NULLIF(CompleteUrl,''), Url), '*/', ''), '/*', '')) DESC
+GO
+	
+	
+	-----------------------------------
+	/****** RH - new view for SEO [vSEO_URL]**********/
+	
+	SELECT        dbo.RCSeo.Page, dbo.WMALinks.url, dbo.WMALinks.name, dbo.WMALinks.location, dbo.RCSeo.Title, dbo.RCSeo.[Desc], dbo.RCSeo.Keywords
+FROM            dbo.RCSeo LEFT OUTER JOIN
+                         dbo.WMALinks ON dbo.RCSeo.Page = '/' + dbo.WMALinks.location
+
+	------------------------------------
+	RH - SEO module recode 
+	
+	Private Sub SEO()
+        Dim URLGuess As String 
+		URLGuess = Request.RawUrl
+		
+		
+		Dim dt6 As DataTable = RC4.Pull("Select Top 1 * from vSEO_URL where url like '" & URLGuess.Replace("/", "") & "' OR Page like '" & URLGuess & "'")
+		If dt6.Rows.Count = 0 
+		Exit Sub
+		End If
+		With dt6.Rows(0)
+                If Not IsDBNull(.Item("Title")) Then Me.Page.Title = .Item("Title")
+                meta.Text = vbCrLf
+                If Not IsDBNull(.Item("Desc")) Then meta.Text &= " <meta name=""description"" content=""" & .Item("Desc") & """/>" & vbCrLf
+                If Not IsDBNull(.Item("Keywords")) Then meta.Text &= " <meta name=""keywords"" content=""" & .Item("Keywords") & """/>" & vbCrLf
+            End With
+    End Sub
+	
+	

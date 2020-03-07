@@ -1,0 +1,130 @@
+﻿<%@ Master Language="VB" CodeFile="Admin.master.vb" Inherits="Admin" %>
+
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head runat="server">
+    <title>RCC Site Admin</title>
+    <link type="text/css" rel="stylesheet" href="/bootstrap/4.1.0/scss/bootstrap.css" media="screen">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <script>
+    	$(document).ready(function () {
+			// Set the correct header nav item to active
+			var url = window.location.pathname;  
+			console.log(url)
+			$('.navbar-nav a[href="'+ url +'"]').addClass('active');
+			$('.nav .nav-item a[href="'+ url +'"]').addClass('active');
+		});
+    </script>
+    
+    <style>
+    	.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.active:hover{background:#868e96;color:#fff;}
+    	.navbar-light .navbar-nav .nav-link:hover{background:#eee;}
+    	.navbar-light .navbar-nav .nav-link.dropdown-divider:hover{background:none;}
+    	.btn-sm, .btn, .btn-lg{border-radius:0;}
+    </style>
+</head>
+<body>
+
+ <form id="form1" runat="server">
+<div class="container-fluid">
+    <div class="row">
+   
+    
+<nav class="navbar navbar-expand-lg navbar-light bg-light flex-lg-column col-lg-2 align-items-lg-start">
+  
+  
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="bg-primary w-100 text-center">
+	<span class="navbar-brand text-white" href="#">Control Panel</span>
+</div>
+  <div class="collapse navbar-collapse mt-3 w-100" id="navbarSupportedContent">
+    <ul class="navbar-nav flex-lg-column align-self-start w-100">
+    
+       
+            		<%
+                        Dim CurUser As RCCUser = GetUserLoggedIn(Session("user")) 
+                    %>
+                   
+                    <% If CurUser.access = 11 Then
+                    		If LCase(CurUser.email) = "rcc@romeocomp.com" Then
+                    			Response.Write("<li class=""nav-item""><h5>Tools</h5></li>")
+                    			Response.Write("<li class=""nav-item nav-link dropdown-divider""></li>")
+                                Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Strings/"">String Resource Mgr</a></li>")
+                                Response.Write("<li class=""nav-item nav-link dropdown-divider""></li>")
+                                Response.Write("<li class=""nav-item""><h5>Website</h5></li>")
+                                Response.Write("<li class=""nav-item nav-link dropdown-divider""></li>")
+                                Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Url/"">Links</a></li>")
+                                Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Menus/"">Menus</a></li>")
+                                Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Redirect/"">Redirects</a></li>")
+                                Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Image/"">Images</a></li>")
+                                Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Labels/"">Labels</a></li>")
+                                Response.Write("<li class=""nav-item mt-3""><h6>Logs</h6></li>")
+                                Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/404Log/"">404</a></li>")
+                                Response.Write("<li class=""nav-item nav-link dropdown-divider""></li>")
+                            End If
+                            Response.Write("<li class=""nav-item""><h5>Sections</h5></li>")
+                    		Response.Write("<li class=""nav-item nav-link dropdown-divider""></li>")
+                            If ConfigStrings.GetValByName("Content") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Content/"">Content</a></li>")
+                            If ConfigStrings.GetValByName("Docs") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Docs/"">Documents</a></li>")
+                            If ConfigStrings.GetValByName("Eblast") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Eblast/"">Eblast</a></li>")
+                            If ConfigStrings.GetValByName("Events") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Events/"">Events</a></li>")
+                            If ConfigStrings.GetValByName("Gallery") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Gallery/"">Image Gallery</a></li>")
+                            If ConfigStrings.GetValByName("News") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/News/"">News</a></li>")
+                            If ConfigStrings.GetValByName("SEO") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/SEO/"">SEO</a></li>")
+                            If ConfigStrings.GetValByName("Products") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Products/"">Products</a></li>")
+                            If ConfigStrings.GetValByName("Promo") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Promo/"">Promotions</a></li>")
+                            If ConfigStrings.GetValByName("FAQ") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/FAQ/"">FAQs</a></li>")
+                            If ConfigStrings.GetValByName("Links") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Links/"">Insurances</a></li>")
+                            If ConfigStrings.GetValByName("Staff Bios") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Bios/"">Staff Bios</a></li>")
+                            If ConfigStrings.GetValByName("Testimonials") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Testimonials/"">Reviews</a></li>")
+                            If ConfigStrings.GetValByName("Users") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Users/"">Users</a></li>")
+                            If ConfigStrings.GetValByName("Videos") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Videos/"">Videos</a></li>")
+                            If ConfigStrings.GetValByName("Slider") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Slider/"">Slider</a></li>")
+                             If ConfigStrings.GetValByName("Locations") = "True" Then Response.Write("<li class=""nav-item""><a class=""nav-link"" href=""/Admin/Locations/"">Coverage Area</a></li>")
+                            'If ConfigurationManager.AppSettings("Events") Then Response.Write("<li><a href=""/Admin/Events/"">Events</a></li>")
+                        End If
+                    %>
+                    <li class="nav-item nav-link dropdown-divider"></li>
+                    <li class="nav-item"><h5><asp:LinkButton ID="lnkLogOut" runat="server">Log Out</asp:LinkButton></h5></li>
+                    <!--li class="nav-item nav-link dropdown-divider"></li-->
+                    <!--li class="nav-item"><a class="nav-link" href="#" onclick="window.open('http://portal.romeocomp.com')">Help Desk</a></li-->
+                </ul>
+</div>
+</nav>
+            
+     
+        
+        
+        
+        
+        
+
+            <div class="col-lg-9 col-12 p-5">
+                <asp:ContentPlaceHolder ID="main" runat="server"></asp:ContentPlaceHolder>
+            </div>
+
+        
+        </div>
+    
+ 
+</div>
+
+            <div class="text-center p-5">
+                <p>&copy; <%=Today.Year%> <a href="http://rccwebmedia.com">RCC Web Media Agency</a> ver.4.0</p>
+            </div>
+
+</form>
+
+	
+	<script src="/bootstrap/4.1.0/js/vendor/popper.min.js"></script>
+	<script src="/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+</body>
+</html>

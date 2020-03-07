@@ -1,0 +1,46 @@
+/**
+ * FAQs
+ */
+
+.faq {
+
+    dt {
+        padding-bottom: $padding-xsmall;
+        border-bottom: 1px solid rgba($purple,0.3);
+        margin-bottom: $padding-xsmall;
+        &.active .icon {
+            transform: rotate(180deg);
+        }
+
+        &:not(.active):last-of-type{
+            border-bottom-color: transparent;
+        }
+
+        .icon {
+            transform: scale(1.5);
+            margin-left: 10px;
+            color: $teal;
+        }
+
+        @include screen-lg-up {
+            &[data-accordion-trigger]:hover {
+                cursor: pointer;
+                color: $teal;
+            }
+        }
+    }
+
+    dd {
+        overflow: hidden;
+        padding-top: $padding-xsmall;
+        padding-bottom: $padding-xsmall;
+        &[data-accordion-content] {
+            height: 0;
+            opacity: 0;
+            &.active {
+                height: auto;
+                opacity: 1;
+            }
+        }
+    }
+}

@@ -1,0 +1,36 @@
+/**
+ * Sidebar styles
+ */
+
+body > header {
+  padding: $padding-medium;
+  @include patterned(overlay);
+
+  nav:last-of-type {
+    a {
+      position: absolute;
+      top: 0;
+      border-radius: 0;
+    }
+
+    [data-logout] {
+      right: 0;
+      border-bottom-left-radius: 4px;
+    }
+  }
+
+  @include screen-sm {
+    [data-logout] {
+      min-width: auto;
+
+      .icon,
+      .icon:first-child {
+        margin: auto;
+      }
+
+      span {
+        display: none;
+      }
+    }
+  }
+}

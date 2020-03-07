@@ -1,0 +1,32 @@
+div[class^="col"] {
+	border:1px dashed #c129b9;
+	background:rgba(247, 247, 247, .5);
+	min-height: 1rem;
+}
+
+div[class^="col"] > * {
+	background:#fff;
+	border:1px dashed rgba(0,0,0, .25);
+	min-height: 1rem;
+}
+
+.container {
+	border:1px dashed #3ad531;
+	min-height: 1rem;
+	background:rgba(247, 247, 247, .75);
+	padding:1rem !important;
+}
+
+.container-fluid {
+	border:1px dashed #0082ca;
+	min-height: 1rem;
+	background:rgba(247, 247, 247, .75);
+	padding:1rem;
+}
+
+.row {
+	border:1px dashed #ff4539;
+	min-height: 1rem;
+	background:rgba(247, 247, 247, .75);
+	padding:1rem;
+}

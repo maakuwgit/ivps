@@ -1,0 +1,10 @@
+/**
+ * Footer styles
+ */
+body > footer {
+  @include patterned(screen);
+
+  small {
+    color: $smoke;
+  }
+}

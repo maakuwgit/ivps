@@ -1,0 +1,43 @@
+<script runat=server language="VB">
+Function curPageName()
+ Dim pagename
+
+ pagename = Request.ServerVariables("SCRIPT_NAME") 
+
+  if inStr(pagename, "/") > 0 then 
+    pagename = Right(pagename, Len(pagename) - instrRev(pagename, "/")) 
+		pagename = LCase(Left(pagename, Len(pagename) - 5))
+  end if 
+
+ return pagename
+End Function
+</script>
+<%@ Master Language="VB" CodeFile="Site.master.vb" Inherits="Site" %>
+<!DOCTYPE html>
+<html lang="en">
+	<head runat="server">
+		<!-- #Include file="\PageSnippets\Head.aspx" -->
+		<asp:Literal runat="server" ID="meta"></asp:Literal>
+		<asp:ContentPlaceHolder ID="head" runat="server">
+		</asp:ContentPlaceHolder>
+	</head>
+	<body class="pattern <%=curPageName()%>">
+		<!-- #Include file="\PageWidgets\SiteHeader.aspx" -->	
+		<main class="container">
+			<!-- #Include file="\PageWidgets\SiteNavigation.aspx" -->
+			<div class="row viewport align-content-start">
+				<asp:ContentPlaceHolder ID="main" runat="server"></asp:ContentPlaceHolder>
+				<div data-slideout-container class="pattern">
+					<div data-slideout-content>
+					<!-- #Include file="\PageWidgets\ContactHouseCallWidget.aspx" -->	
+					</div>
+				</div>
+			</div>
+		</main>
+		<!-- #Include file="\PageWidgets\SiteFooter.aspx" -->	
+
+		<!-- #Include file="\PageSnippets\Foot.aspx" -->
+		
+		
+	</body>
+</html>

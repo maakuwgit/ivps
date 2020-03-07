@@ -1,0 +1,100 @@
+/**
+ * Navbar styles
+ */
+.navbar {
+  position: absolute;
+  left: 0;
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+  height: 100%;
+  width: $sidebar-width;
+  overflow: hidden;
+  text-align: left;
+  background-color: $tan;
+
+  > div {
+    width: 100%;
+  }
+	
+	a {
+    position: relative;
+    @include flexible(flex-start,center);
+    font-family: $font-family-alt;
+    font-size: 0;
+    color: $purple;
+    letter-spacing: 0;
+    text-decoration: none;
+    padding: rem-calc(10);
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: rem-calc(5);
+      height: 1px;
+      width: calc(100% - #{rem-calc(10)});
+      background-color: rgba($purple,0.33);
+    }
+
+    &:last-child:after {
+      background-color: transparent;
+    }
+  }
+
+  @include screen-lg {
+    a {
+      .icon {
+        width: 100%;
+        height: rem-calc(32);
+      }
+    }
+  }
+
+  @include screen-lg-up {
+    width: $sidebar-width-lg;
+
+    a {
+    font-size: rem-calc(15);
+
+      &:hover,
+      &:focus {
+        background-color: $ivory;
+      }
+
+      .icon {
+        margin-right: rem-calc(10);
+      }
+
+    }
+  }
+
+ }
+
+.navbar-toggler {
+  position: absolute;
+  @include flexible();
+  left: $sidebar-width;
+  width: rem-calc(25);
+  height: rem-calc(25);
+  top: 0;
+  padding: rem-calc(4);
+  border: none;
+  border-radius: 0;
+  border-bottom-right-radius: rem-calc(4);
+  color: $white;
+  background-color: rgba($purple,0.33);
+
+  @include screen-lg {
+    display: none;
+  }
+
+  @include screen-lg-up {
+    left: $sidebar-width-lg;
+
+    &:hover,
+    &:focus {
+      background-color: $purple;
+    }
+  }
+}

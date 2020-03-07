@@ -1,0 +1,2 @@
+<link type="text/css" rel="stylesheet" href="/assets/css/vendor/starability-all.min.css" media="screen">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>

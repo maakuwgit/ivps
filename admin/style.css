@@ -1,0 +1,45 @@
+body{background-color:#ccc; background-image:url('/admin/images/img05.jpg');}
+
+.up, .down{background-image:url(/Admin/images/arrow.png); border-style:none; background-color:transparent; width:19px; height:19px;}
+.up{background-position:0 -38px;}
+.up:hover{background-position:0 -57px;}
+.down{}
+.down:hover{background-position:0 -19px;}
+.mGrid{width:100%; background-color: #fff; margin: 5px 0 10px 0; border: solid 1px #525252; border-collapse:collapse;}
+.mGrid td{padding: 2px; border: solid 1px #c1c1c1; color: #333;}
+.mGrid th {padding: 4px 2px; color: #fff; background-color:#424242; border-left: solid 1px #525252; font-size: 0.9em; text-align:left;}
+.mGrid .alt { background-color: #ececec; }
+/*.mGrid .pgr { background: #424242 url(/Admin/img/grd_pgr.png) repeat-x top; }*/
+.mGrid .pgr table { margin: 5px 0; }
+.mGrid .pgr td {border-width: 0; padding: 0 6px; border-left: solid 1px #666; font-weight: bold; color: #fff; line-height: 12px;}   
+.mGrid .pgr a { color: #666; text-decoration: none; }
+.mGrid .pgr a:hover { color: #000; text-decoration: none;}
+.mGrid tr:hover{background-color:#F5DEB3;}
+
+.footerbg{background-image:url(/admin/images/html5.png); background-position:right 15px center; background-repeat:no-repeat;}
+
+.admin-nav ul{padding:0; margin:0;}
+.admin-nav ul{
+    list-style-type:none;
+}
+
+
+.c{margin:0 auto; background-color:#fff; padding:5px 10px; margin:10px auto;}
+.c.admin-content{padding-bottom:30px;}
+.center{text-align:center;}
+
+
+/* New layout and style */
+body{background:#25ad58;font-family: Sans-Serif;padding:0rem 0 0 0;margin:0;}
+.admin-container{display: flex;flex-direction: column;}
+.admin-container-row{flex-direction: row;}
+.admin-nav{flex: 0 0 20%;}
+.admin-content{flex: 1 1 auto;padding:2rem;background: #fff;}
+.admin-footer{flex: 0 1 auto;padding:2rem;}
+
+/* Admin Navigation */
+.admin-nav{background-color: #2d87d1;}
+.admin-nav li{display:inline-block;}
+.admin-nav a{display: block; width: auto;font-size: 1rem;font-weight: 500;text-decoration: none;padding:1rem;color:#fff;border:none;font-size:1rem;}
+.admin-nav a:hover{background-color: #37a5ff;}
+.admin-nav a:active{background-color: #0a406b;}

@@ -1,0 +1,19 @@
+/**
+ * Heading styles
+ */
+
+main header {
+  @include flexible(flex-start, center, column, flex-start);
+  min-height: auto;
+  @include expanded_nav();
+  padding-top: $padding-small;
+
+  h1 {
+    margin-left: 0;
+  }
+
+  @include screen-lg-up {
+    padding-top: $padding-medium;
+  }
+
+}

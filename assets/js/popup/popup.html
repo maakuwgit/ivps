@@ -1,0 +1,75 @@
+<Html>
+<head>
+<script src="popup.js"></script>
+<script>
+
+var mypop = POP
+
+mypop.load({
+			name: "popup-2",
+			contentUrl: "templates/pop-template.html",
+			displayOptions: {
+				effect: "fadeIn",
+				start: "11/23/2017",
+				end: "11/27/2018",
+				overlay:false,
+				overlayPointerEvents: false,
+			},
+			location: {
+				urls: ["popup.html",
+						"http://localhost/popup/popup1.html"]
+			},
+			reset: true,
+		})
+		
+console.log(mypop)
+//POP.show(500)
+//function blankPopup(){
+var slider = POP
+
+function change(){
+	slider.content('<h1 style=\'padding:5rem;\'>Thanks</h1>')
+}
+
+window.setTimeout(function(){
+
+slider.load({
+			name: "popup-3",
+			content: "<h1 style='padding:5rem;'>Hello</h1>",
+			displayOptions: {
+				showEffect: "slideUpIn",
+				hideEffect: "slideLeftOut",
+				overlayClickable: true,
+				overlayBackground: "rgba(255,102,153, .5)",
+				position:"bottom-right",
+				overlay:false,
+				overlayPointerEvents: false,
+				popupBackground: "red",
+				popupBoxShadow: "none"
+			},
+			displayEventOptions:{
+				event:"scroll",
+				delay:0,
+				scrollDistance:"100%",
+			},
+			session:{
+				displayOnce:"false",
+			},
+			reset:true,
+		});
+		}, 1000);
+//}
+
+/*window.setTimeout(function(){POP.load({
+			name: "popup-4",
+			content: "<h1>Hello 2</h1>"
+		})}, 2000)*/
+
+</script>
+</head>
+<body>
+<a class="btn" onclick="change()" >Open Popup #1</a>
+<a class="btn" data-popup-open-="popup-3" data-popup-toggle="popup-3"  href="#">Open Popup #2</a>
+<div style="height:125vh;">1</div>
+</body>
+</html>
